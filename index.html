@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 
 <!-- =====================================================================================
-* PROJECT: Hiring Pre-Report Template
-* PLATFORM: MAE
-* AGENT: ARA-CV (Hiring CoPilot), FUXI (Frontend Engine)
+* PROJECT: Resume Pre-Report Template
+* PLATFORM: MAE (McBile AI-Engine)
+* AGENT / Protocol: AHRA (Autonomous Resume Hiring Analyst)
 * DESCRIPTION: Production-ready template for candidate assessment reports. (Showcase Mode)
 ====================================================================================== -->
 
 <!-- =====================================================================================
-* CHANGELOG v3.0 (by FUXI on 30.08.2025)
+* CHANGELOG v3.0 (29.08.2025)
 * --------------------------------------------------------------------------------------
 * UI/UX REFACTORING:
-*  
+*
 * JS LOGIC & STABILITY:
-*  
+* 
 * AI PROTOCOL & INTEGRATION:
 *  
 ====================================================================================== -->
@@ -23,13 +23,13 @@
 <!-- ==== SECTION: HEAD ==== -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HRCV [YY.MM.DD Position. Candidate Name]</title>
+<title>CV-Report [YY.MM.DD Position. Candidate Name]</title>
 
 <!-- ==== PART 1: AI PROTOCOL ==== -->
 <!--
 #######################################################
 #
-#  INTERNAL PROTOCOL & AI INSTRUCTIONS (MAE ARA-CV)
+#  INTERNAL PROTOCOL & AI INSTRUCTIONS (MAE ARHA) 
 #
 #######################################################
 
@@ -47,12 +47,12 @@
 
 
 ======================================================
-СТРУКТУРА ПРОТОКОЛА MAE ARA-CV
+СТРУКТУРА ПРОТОКОЛА MAE ARHA
 ------------------------------------------------------
 1. Инициализация протокола
 2. Глобальные ограничения и workflow
-3. Роль: DATA-EXTRACT
-4. Роль: HRCV
+3. Роль: DTEX
+4. Роль: ARHA
 5. Блок кандидата (`candidate info`)
 6. Сводка и вердикт (`overview`)
 7. Карты компетенций (`competency cards`)
@@ -88,7 +88,7 @@
 
 
 ======================================================
-3. РОЛЬ: DATA-EXTRACT
+3. РОЛЬ: DTEX (DATA-EXTRACT)
 ------------------------------------------------------
 Назначение: извлечь и нормализовать входные данные для последующего заполнения шаблона.
 Вход: Резюме кандидата (обязательно), Описание вакансии/JD (опционально).
@@ -96,12 +96,12 @@
 1) Считать и структурировать: пол (для `data-gender`), Имя, Фамилию, возраст и местоположение, целевую должность (`[data-element="position-title"]`), опыт (компании/роли/даты), hard/tech/soft навыки, образование и сертификаты.
 2) Обнаружить пробелы/несоответствия: перекрытия дат, «дыры» в опыте, противоречия в должностях/описаниях.
 3) Сформировать структурированный объект данных + список вопросов для верификации.
-Выход: Готовая структура данных → передать в режим HRCV.
+Выход: Готовая структура данных → передать в режим ARHA.
 ======================================================
 
 
 ======================================================
-4. РОЛЬ: HRCV
+4. РОЛЬ: ARHA (Autonomous Resume Hiring Analyst)
 ------------------------------------------------------
 Назначение: провести аналитику по данным кандидата и **заполнить контент** существующего HTML-шаблона, не изменяя его структуру.
 JD необязателен: если дан — оценка под JD, если нет — под iGaming-бенчмарки.
@@ -135,9 +135,9 @@ JD необязателен: если дан — оценка под JD, есл�
 * **medium:** Резюме содержит качественные, но абстрактные описания. Анализ требует верификации.
 * **low:** Резюме крайне расплывчатое или неполное. Анализ является предположением.
 ** ВАЖНО: 
-1) Значение уверенности (High, Medium, Low) и соответствующий класс (`color-success`, `color-average`, `color-weak`) должны быть переданы в JS для отображения в сайдбаре (`[data-element="confidence-value"]`). 
-2) При обнаружении в резюме мультизанятости (пересечения периодов работы в разных компаниях), Уверенность в анализе (`Confidence Score`) **не может быть установлена выше `medium`** (`color-average`).
-3) При значении уверенности `low` ни одна компетенция **не может быть оценена выше `medium`** (`color-average`).
+1) Значение уверенности (High, Medium, Low) и соответствующий класс (`color-badge-bg-success`, `color-badge-bg-average`, `color-badge-bg-weak`) должны быть переданы в JS для отображения в сайдбаре (`[data-element="confidence-value"]`). 
+2) При обнаружении в резюме мультизанятости (пересечения периодов работы в разных компаниях), Уверенность в анализе (`Confidence Score`) **не может быть установлена выше `medium`** (`color-badge-bg-average`).
+3) При значении уверенности `low` ни одна компетенция **не может быть оценена выше `medium`** (`color-badge-bg-average`).
 
 2. **Ключевые плюсы (`[data-block="pros"]`):** Сформулировать минимум 2-3 наиболее сильных, релевантных преимущества кандидата с прямыми примерами или цифрами из резюме. Пример: "Глубокий опыт в разработке платежных шлюзов (5+ лет в FinTech), подтвержденный проектом X".
 3. **Основные риски (`[data-block="risks"]`):** Сформулировать минимум 2-3 главных риска или вопроса, требующих верификации на интервью. Пример: "Опыт с Kubernetes упомянут, но не детализирован; необходимо проверить глубину практических навыков".
@@ -269,9 +269,9 @@ JD необязателен: если дан — оценка под JD, есл�
 | Командная работа | 5% | Взаимодействие с разработкой и другими командами.
 
 3. **Интерпретация оценок (Как ставить балл):**
-* `color-success` = **значение 0.99 (99%)**: Навык подтвержден убедительно (конкретные проекты, измеримые результаты).
-* `color-average` = **значение 0.6 (60%)**: Навык упомянут, но без деталей; опыт релевантен, но абстрактен. Требует верификации.
-* `color-weak` = **значение 0.1 (10%)**: Навык отсутствует, устарел или упомянут формально без подтверждения.
+* `color-badge-bg-success` = **значение 0.99 (99%)**: Навык подтвержден убедительно (конкретные проекты, измеримые результаты).
+* `color-badge-bg-average` = **значение 0.6 (60%)**: Навык упомянут, но без деталей; опыт релевантен, но абстрактен. Требует верификации.
+* `color-badge-bg-weak` = **значение 0.1 (10%)**: Навык отсутствует, устарел или упомянут формально без подтверждения.
 ======================================================
 
 
@@ -295,7 +295,7 @@ JD необязателен: если дан — оценка под JD, есл�
 ------------------------------------------------------
 * **Scoring:** Скрипт автоматически рассчитает текущую оценку (`[data-element="score-value"]`) на основе выставленных оценок компетенций.
 * **Verification Points:**
-* **Заполнение списка:** Внести в JSON-данные все пункты со статусом `color-average` и `color-weak`, которые являются **"Верифицируемыми Пунктами"**.
+* **Заполнение списка:** Внести в JSON-данные все пункты со статусом `color-badge-bg-average` и `color-badge-bg-weak`, которые являются **"Верифицируемыми Пунктами"**.
 * **Расчет потенциала:** Скрипт автоматически рассчитает и отобразит в списке `[data-element="verification-list"]` потенциальный прирост (%) для каждого пункта.
 ======================================================
 
@@ -361,60 +361,84 @@ JD необязателен: если дан — оценка под JD, есл�
 * Нет JD? Используй отраслевые бенчмарки iGaming.
 * Нет множителей роли? Генерируй их по роли из `[data-element="position-title"]` и содержимого резюме.
 3. **Final Check:** Перед выдачей результата убедиться, что все текстовые поля и атрибуты заполнены, классы `color-*` расставлены, суммы весов корректны, а структура HTML/CSS/JS не нарушена.
-======================================================
--->
-<!-- ==== END PART 1 ==== -->
 
-<!-- ==== PART 2: STYLES ==== -->
+==== END PART 1 ==== -->
+
+
+<!-- ==== PART 2: STYLES ==== 
+==== SECTION: STYLES ==== 
+==== PART 2.1: CORE & THEMES ==== -->
+
 <style>
-/* ==== SECTION: STYLES ==== */
-
-/* ==== PART 2.1: CORE & THEMES ==== */
-:root {
---color-bg: #fcf8f1;
---color-surface: #f2ebda;
---color-title: #244075;
---color-primary: #0057a6;
---color-primary-a: #d6e6f4;
---color-button-text: #FFFFFF;
---color-text-primary: #111827;
---color-text-secondary: #282828;
---color-border: #d0d0d0;
---color-danger: #DC2626;
---color-weak: #f87171;
---color-average: #f59e0b;
---color-success: #38761d;
---color-executive: #269e41; 
+:root 
+{
+--color-bg: #FFFFFF;
+--color-bg-surface: #F2F2F7;
+--color-title: #000000;
+--color-text-main: #1C1C1E;
+--color-text-muted: #6E6E73;
+--color-accent: #007AFF;
+--color-accent-a: rgba(0,122,255,0.15);
+--color-badge-text: #111;
+--color-badge-bg-danger: #FF3B30;
+--color-badge-bg-weak: #FF9F94;
+--color-badge-bg-average: #FFCC00;
+--color-badge-bg-success: #34C759;
+--color-badge-bg-strong: #30D158;
+--color-border: #D1D1D6;
 --border-width: 1px;
 }
 
-[data-theme="dark"] {
---color-bg: #1e1e1e;
---color-surface: #282828;
---color-title: #aabee6;
---color-primary: #cbecfe;
---color-primary-a: #2a2f33;
---color-button-text: #282828;
---color-text-primary: #f3ead8; 
---color-text-secondary: #c8c8c8;
---color-border: #2a2f33;
---color-danger: #FF3333;
---color-weak: #ff8888;
---color-average: #f9f452;
---color-success: #3cb36d;
---color-executive: #2aae48;
---border-width: 1px;        
+[data-theme="dark"] 
+{
+--color-bg: #202124;
+--color-bg-surface: #2D2E30;
+--color-title: #E8EAED;
+--color-text-main: #E0E0E0;
+--color-text-muted: #BDC1C6;
+--color-accent: #8AB4F8;
+--color-accent-a: rgba(138,180,248,0.16);
+--color-badge-text: #202124;
+--color-badge-bg-danger: #FF4444;
+--color-badge-bg-weak: #F28B82;
+--color-badge-bg-average: #FDD663;
+--color-badge-bg-success: #188038;
+--color-badge-bg-strong: #34A853;
+--color-border: #3C4043;
+--border-width: 1px;
 }
+
+
+<!-- ==== "dark 2" 
+ --color-bg: #101010;
+--color-bg-surface: #202020;
+--color-title: #A1C9FF;
+--color-accent: #A6C9FF;
+--color-accent-a: rgba(165, 201, 255, 0.10);
+--color-badge-text: #202020;
+--color-text-main: #F4E8D0;
+--color-text-muted: #E0E0E0; 
+--color-border: #404040;
+--color-badge-bg-danger: #FF4444;
+--color-badge-bg-weak: #FF9999;
+--color-badge-bg-average: #F9F452;
+--color-badge-bg-success: #50D890;
+--color-badge-bg-strong: #79D79A;
+--border-width: 1px;     
+ 
+==== -->
+
+
 /* ==== END PART 2.1 ==== */
 
 /* ==== PART 2.2: BASE & LAYOUT ==== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--color-bg); color: var(--color-text-primary); font-size: 16px; line-height: 1.5; }
-.container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 25px 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--color-bg); color: var(--color-text-main); font-size: 16px; line-height: 1.5; }
+.container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 15px 0; }
 .dashboard-layout { display: grid; grid-template-columns: 320px 1fr; gap: 30px; align-items: flex-start; }
 .dashboard-sidebar { position: sticky; top: 90px; display: flex; flex-direction: column; gap: 20px; }
-.dashboard-content { display: flex; flex-direction: column; gap: 25px; }
+.dashboard-content { display: flex; flex-direction: column; gap: 20px; }
 /* ==== END PART 2.2 ==== */
 
 /* ==== PART 2.3: HEADER & CONTROLS ==== */
@@ -422,92 +446,92 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
 #controls-section .container { padding: 0; }
 .controls-panel { display: flex; gap: 0.75em; align-items: center; }
 #header-title { font-size: 1.35em; font-weight: 600; color: var(--color-title); margin-right: auto; padding-right: 1em; white-space: nowrap; }
-.control-btn { position: relative; background-color: var(--color-surface); border: var(--border-width) solid var(--color-border); padding: 0; border-radius: 8px; color: var(--color-text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; height: 44px; width: 44px; flex-shrink: 0; transition: all 0.2s ease; }
-.control-btn:hover { border-color: var(--color-title); color: var(--color-average); }
+.control-btn { position: relative; background-color: var(--color-bg-surface); border: var(--border-width) solid var(--color-border); padding: 0; border-radius: 8px; color: var(--color-text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; height: 44px; width: 44px; flex-shrink: 0; transition: all 0.2s ease; }
+.control-btn:hover { border-color: var(--color-title); color: var(--color-badge-bg-average); }
 .control-btn svg { width: 22px; height: 22px; pointer-events: none; }
 #theme-switcher .icon-sun { display: block; } #theme-switcher .icon-moon { display: none; }
 [data-theme="light"] #theme-switcher .icon-sun { display: none; } [data-theme="light"] #theme-switcher .icon-moon { display: block; }
 .dropdown-wrapper { position: relative; }
-.dropdown-menu { display: none; position: absolute; top: 110%; right: 0; background-color: var(--color-surface); border: var(--border-width) solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 100; min-width: 220px; }
+.dropdown-menu { display: none; position: absolute; top: 110%; right: 0; background-color: var(--color-bg-surface); border: var(--border-width) solid var(--color-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 100; min-width: 220px; }
 .dropdown-menu.is-open { display: block; }
-.dropdown-menu a { display: block; padding: 10px 15px; text-decoration: none; color: var(--color-text-primary); border-radius: 4px; }
+.dropdown-menu a { display: block; padding: 10px 15px; text-decoration: none; color: var(--color-text-main); border-radius: 4px; }
 .dropdown-menu a:hover { background-color: var(--color-bg); }
 #email-dropdown .action-item { padding: 10px; }
-#email-dropdown .email-input { width: 100%; padding: 8px 12px; border-radius: 6px; border: var(--border-width) solid var(--color-border); background-color: var(--color-bg); color: var(--color-text-primary); }
-#email-dropdown .btn-action { display: block; width: 100%; background-color: var(--color-primary); color: var(--color-button-text); padding: 10px; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; text-align: center; margin-top: 10px; text-decoration: none; }
+#email-dropdown .email-input { width: 100%; padding: 8px 12px; border-radius: 6px; border: var(--border-width) solid var(--color-border); background-color: var(--color-bg); color: var(--color-text-main); }
+#email-dropdown .btn-action { display: block; width: 100%; background-color: var(--color-accent); color: var(--color-badge-text); padding: 10px; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; text-align: center; margin-top: 10px; text-decoration: none; }
 /* ==== END PART 2.3 ==== */
 
 /* ==== PART 2.4: CARDS (GENERAL) ==== */
-.card { background-color: var(--color-surface); border-radius: 12px; border: var(--border-width) solid var(--color-border); overflow: hidden; }
+.card { background-color: var(--color-bg-surface); border-radius: 12px; border: var(--border-width) solid var(--color-border); overflow: hidden; }
 .card-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 10px 15px; border-bottom: var(--border-width) solid var(--color-border); }
-.card-header h2 { font-size: 1.2em; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 0.75em; color: var(--color-primary); flex-grow: 1; }
+.card-header h2 { font-size: 1.2em; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 0.75em; color: var(--color-accent); flex-grow: 1; }
 .card-header h2 svg { width: 1em; height: 1em; flex-shrink: 0; }
-.card-header .category-weight { font-size: 0.9em; font-weight: 500; color: var(--color-text-primary); }
-.card-content { padding: 15px; background-color: var(--color-surface); }
+.card-header .category-weight { font-size: 0.9em; font-weight: 500; color: var(--color-text-main); }
+.card-content { padding: 15px; background-color: var(--color-bg-surface); }
 /* ==== END PART 2.4 ==== */
 
 /* ==== PART 2.5: SIDEBAR COMPONENTS ==== */
 .sidebar-block { padding: 15px; }
 [data-element="candidate-header"] { text-align: left; }
-[data-element="candidate-name"] { font-size: 1.3em; margin-bottom: 8px; color: var(--color-primary); }
-.candidate-meta-group { display: flex; align-items: center; gap: 15px; color: var(--color-text-secondary); font-size: 0.95em; }
+[data-element="candidate-name"] { font-size: 1.3em; margin-bottom: 8px; color: var(--color-accent); }
+.candidate-meta-group { display: flex; align-items: center; gap: 15px; color: var(--color-text-muted); font-size: 1em; }
 [data-section="position"] { text-align: center; }
-[data-element="position-title"] { display: inline-block; background-color: var(--color-bg); padding: 4px 10px; border-radius: 6px; font-weight: 500; color: var(--color-text-primary); font-size: 1.3em; }
+[data-element="position-title"] { display: inline-block; background-color: var(--color-bg); padding: 4px 10px; border-radius: 6px; font-weight: 500; color: var(--color-text-main); font-size: 1.3em; }
 .score-display { display: flex; justify-content: space-between; align-items: center; padding: 15px 0 0 0; margin-top:15px; border-top: 1px solid var(--color-border); }
 [data-section="assessment-summary"] .score-display:first-child { padding-top: 0; margin-top:0; border-top: none; }
 [data-section="assessment-summary"] h4 { padding-top: 15px; margin-top:15px; border-top: 1px solid var(--color-border); }
 .score-label, [data-section="assessment-summary"] h4 { font-size: 1.1em; font-weight: 500; line-height: 1.3; }
-.score-value { font-size: 1.1em; font-weight: bold; padding: 4px 10px; border-radius: 6px; color: var(--color-button-text); min-width: 120px; text-align: center; }
-.score-value.color-weak { background-color: var(--color-weak); }
-.score-value.color-average { background-color: var(--color-average); }
-.score-value.color-success { background-color: var(--color-success); }
-.score-value.color-executive { background-color: var(--color-executive); }
+.score-value { font-size: 1.1em; font-weight: bold; padding: 4px 10px; border-radius: 6px; color: var(--color-badge-text); min-width: 120px; text-align: center; }
+.score-value.color-badge-bg-weak { background-color: var(--color-badge-bg-weak); }
+.score-value.color-badge-bg-average { background-color: var(--color-badge-bg-average); }
+.score-value.color-badge-bg-success { background-color: var(--color-badge-bg-success); }
+.score-value.color-badge-bg-strong { background-color: var(--color-badge-bg-strong); }
 [data-element="score-value"] { min-width: 150px; }
 [data-section="assessment-summary"] h4 { margin-bottom: 5px; text-align: left; }
-[data-element="verification-list"] { list-style: none; font-size: 0.9em; display: flex; flex-direction: column; gap: 8px; background-color: var(--color-bg); padding: 10px; border-radius: 8px; border: var(--border-width) solid var(--color-border); margin-top:0; }
+[data-element="verification-list"] { list-style: none; font-size: 1em; display: flex; flex-direction: column; gap: 8px; background-color: var(--color-bg); padding: 10px; border-radius: 8px; border: var(--border-width) solid var(--color-border); margin-top:0; }
 [data-element="verification-list"] li { display: flex; justify-content: space-between; }
-[data-element="verification-list"] .risk-value { font-weight: 600; color: var(--color-success); }
+[data-element="verification-list"] .risk-value { font-weight: 600; color: var(--color-badge-bg-strong); }
 /* ==== END PART 2.5 ==== */
 
 /* ==== PART 2.6: MAIN CONTENT COMPONENTS ==== */
-.content-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 20px; }
-.content-block { background-color: var(--color-bg); border: var(--border-width) solid var(--color-border); border-radius: 8px; padding: 20px; }
-.grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.content-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 15px; }
+.content-block { background-color: var(--color-bg); border: var(--border-width) solid var(--color-border); border-radius: 8px; padding: 15px; }
+.grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 [data-block="justification"] h4 { margin-top: 0; margin-bottom: 10px; font-size: 1.1em; transition: color 0.3s; font-weight: 600; line-height: 1.5; }
-.summary-grid { margin-top: 15px; }
-.score-badge { display: inline-block; padding: 2px 8px; font-size: 0.85em; font-weight: 600; border-radius: 6px; color: var(--color-button-text); text-align: center; vertical-align: middle; line-height: 1.5; }
+.summary-grid { margin-top: 10px; }
+.score-badge { display: inline-block; padding: 2px 8px; font-size: 0.85em; font-weight: 600; border-radius: 6px; color: var(--color-badge-text); text-align: center; vertical-align: middle; line-height: 1.5; }
 [data-element="competency-item"] { padding: 10px 20px; }
-.competency-header { margin-bottom: 10px; }
-.progress-display { display: flex; align-items: center; gap: 15px; margin-bottom: 7px; }
-.progress-bar-wrapper { flex-grow: 1; flex-basis: 70%; height: 5px; background-color: var(--color-border); border-radius: 3px; overflow: hidden; }
+.competency-header { margin-bottom: 12px; }
+.progress-display { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
+.progress-bar-wrapper { flex-grow: 1; flex-basis: 70%; height: 6px; background-color: var(--color-border); border-radius: 3px; overflow: hidden; }
 .progress-bar { height: 100%; border-radius: 3px; }
-.item-weight { font-size: 0.9em; font-weight: 500; color: var(--color-text-primary); flex-shrink: 0; }
-[data-element="competency-item"].color-success .progress-bar { background-color: var(--color-success); width: 95%; } [data-element="competency-item"].color-average .progress-bar { background-color: var(--color-average); width: 60%; } [data-element="competency-item"].color-weak .progress-bar { background-color: var(--color-weak); width: 10%; }
+.item-weight { font-size: 0.9em; font-weight: 500; color: var(--color-text-main); flex-shrink: 0; }
+[data-element="competency-item"].color-badge-bg-success .progress-bar { background-color: var(--color-badge-bg-success); width: 95%; } [data-element="competency-item"].color-badge-bg-average .progress-bar { background-color: var(--color-badge-bg-average); width: 60%; } [data-element="competency-item"].color-badge-bg-weak .progress-bar { background-color: var(--color-badge-bg-weak); width: 10%; }
 [data-block="justification"], [data-block="pros"], [data-block="risks"], [data-block*="step"], [data-block*="variation"], [data-block*="risk"], [data-block*="assessment"] { border-left-width: 4px; border-style: solid;}
-[data-block="justification"], [data-block="assessment-asset"], [data-block="assessment-condition"], [data-block*="step"] { border-left-color: var(--color-text-secondary); }
-[data-block="pros"] { border-left-color: var(--color-success); } [data-block="risks"] { border-left-color: var(--color-danger); }
-[data-block="variation-success"], [data-block="assessment-value"].color-success { border-left-color: var(--color-success); }
-[data-block="variation-average"], [data-block="assessment-value"].color-average, [data-block="risk-dynamic"] { border-left-color: var(--color-average); }
-[data-block="variation-danger"], [data-block="assessment-value"].color-weak { border-left-color: var(--color-danger); }
-[data-block="risk-static"] { border-left-color: var(--color-text-secondary); }
-.text-color-average { color: var(--color-average); }
+[data-block="justification"], [data-block="assessment-asset"], [data-block="assessment-condition"], [data-block*="step"] { border-left-color: var(--color-text-muted); }
+[data-block="pros"] { border-left-color: var(--color-badge-bg-success); } [data-block="risks"] { border-left-color: var(--color-badge-bg-danger); }
+[data-block="variation-success"], [data-block="assessment-value"].color-badge-bg-success { border-left-color: var(--color-badge-bg-success); }
+[data-block="variation-average"], [data-block="assessment-value"].color-badge-bg-average, [data-block="risk-dynamic"] { border-left-color: var(--color-badge-bg-average); }
+[data-block="variation-danger"], [data-block="assessment-value"].color-badge-bg-weak { border-left-color: var(--color-badge-bg-danger); }
+[data-block="risk-static"] { border-left-color: var(--color-text-muted); }
+.text-color-badge-bg-average { color: var(--color-badge-bg-average); }
 .font-weight-600 { font-weight: 600; }
-.text-accent-secondary { color: var(--color-text-secondary); margin-bottom: 6px; }
-.border-left-success { border-left-color: var(--color-success) !important; }
-.border-left-danger { border-left-color: var(--color-danger) !important; }
+.text-accent-secondary { color: var(--color-text-muted); margin-bottom: 6px; }
+.border-left-success { border-left-color: var(--color-badge-bg-success) !important; }
+.border-left-danger { border-left-color: var(--color-badge-bg-danger) !important; }
 .task-block-wrapper { display: grid; grid-template-columns: 1fr; gap: 20px; }
 .task-header { display: flex; align-items: center; gap:15px; margin-bottom: 10px; }
 .task-header h4 { margin: 0; flex-grow: 1; }
 pre, .notes-textarea { background-color: var(--color-bg); padding: 10px; border-radius: 8px; border: var(--border-width) solid var(--color-border); white-space: pre-wrap; word-break: break-word; }
 pre, .notes-textarea { font-family: 'SF Mono', 'Fira Code', monospace; }
-pre#test-assignment-md, pre#evaluation-form-md { color: var(--color-text-secondary); font-size: 0.85em; }
-.notes-textarea { width: 100%; min-height: 150px; font-size: 0.85em; color: var(--color-text-secondary); resize: vertical; }
+pre#test-assignment-md, pre#evaluation-form-md { color: var(--color-text-muted); font-size: 0.85em; }
+.notes-textarea { width: 100%; min-height: 150px; font-size: 0.85em; color: var(--color-text-muted); resize: vertical; }
 /* ==== END PART 2.6 ==== */
 
 /* ==== PART 2.7: UTILITIES & FOOTER ==== */
 #scrollToTopBtn { position: fixed; bottom: 20px; right: 20px; z-index: 1000; opacity: 0; visibility: hidden; transform: translateY(20px); transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; }
 #scrollToTopBtn.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
-footer { text-align: center; margin-top: 1rem; padding: 1rem 0; color: var(--color-text-secondary); font-size: 0.9em; }
+footer { text-align: center; margin-top: 1rem; padding: 1rem 0; color: var(--color-text-muted); font-size: 0.9em; }
 footer p { margin: 0.25rem 0; }
 footer .copyright { color: var(--color-title); font-weight: bold; }
 /* ==== END PART 2.7 ==== */
@@ -520,19 +544,19 @@ footer .copyright { color: var(--color-title); font-weight: bold; }
 @media print {
 :root {
 --color-bg: #FFFFFF;
---color-surface: #f1f6fc;
+--color-bg-surface: #e5f0ff;
 --color-title: #0057a6;
---color-primary: #244075;
---color-primary-a: #d4deed;
---color-button-text: #FFFFFF;
---color-text-primary: #111827;
---color-text-secondary: #4B5563;
+--color-accent: #244075;
+--color-accent-a: #d4deed;
+--color-badge-text: #111111;
+--color-text-main: #111827;
+--color-text-muted: #4B5563;
 --color-border: #bfbfbf;
---color-danger: #DC2626;
---color-weak: #f87171;
---color-average: #f59e0b;
---color-success: #38761d;
---color-executive: #2aae48;
+--color-badge-bg-danger: #DC2626;
+--color-badge-bg-weak: #f87171;
+--color-badge-bg-average: #f59e0b;
+--color-badge-bg-success: #38761d;
+--color-badge-bg-strong: #2aae48;
 --border-width: 1px;
 }
 
@@ -559,7 +583,7 @@ img, svg, video, canvas { max-width: 100% !important; height: auto !important; }
 <div class="container">
 <div class="controls-panel">
 <!-- Element: Title -->
-<h1 id="header-title">HR-CoPilot</h1>
+<h1 id="header-title">CV-Check</h1>
 <!-- Element: Section Selector -->
 <div class="dropdown-wrapper">
 <button id="section-selector-btn" class="control-btn" title="Перейти к секции"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
@@ -804,20 +828,20 @@ img, svg, video, canvas { max-width: 100% !important; height: auto !important; }
     },
     "competencies": {
       "hard-skills": [
-        { "name": "[Ключевая компетенция 1]", "scoreClass": "color-success", "weight": 50, "justification": "[Пример из резюме с измеримым результатом, подтверждающий высокий уровень владения.]" },
-        { "name": "[Ключевая компетенция 2]", "scoreClass": "color-average", "weight": 30, "justification": "[Навык упомянут, но без конкретных примеров или KPI. Требует верификации.]" },
-        { "name": "[Ключевая компетенция 3]", "scoreClass": "color-weak", "weight": 20, "justification": "[Навык отсутствует в резюме, но является важным для оценки по бенчмарку.]" }
+        { "name": "[Ключевая компетенция 1]", "scoreClass": "color-badge-bg-success", "weight": 50, "justification": "[Пример из резюме с измеримым результатом, подтверждающий высокий уровень владения.]" },
+        { "name": "[Ключевая компетенция 2]", "scoreClass": "color-badge-bg-average", "weight": 30, "justification": "[Навык упомянут, но без конкретных примеров или KPI. Требует верификации.]" },
+        { "name": "[Ключевая компетенция 3]", "scoreClass": "color-badge-bg-weak", "weight": 20, "justification": "[Навык отсутствует в резюме, но является важным для оценки по бенчмарку.]" }
       ],
       "tech-stack": [
-        { "name": "[Основная технология]", "scoreClass": "color-success", "weight": 60, "justification": "[Подтвержденный опыт использования в нескольких проектах.]" },
-        { "name": "[Вспомогательная технология]", "scoreClass": "color-average", "weight": 40, "justification": "[Технология упомянута в списке навыков без описания проектов.]" }
+        { "name": "[Основная технология]", "scoreClass": "color-badge-bg-success", "weight": 60, "justification": "[Подтвержденный опыт использования в нескольких проектах.]" },
+        { "name": "[Вспомогательная технология]", "scoreClass": "color-badge-bg-average", "weight": 40, "justification": "[Технология упомянута в списке навыков без описания проектов.]" }
       ],
       "soft-skills": [
-        { "name": "[Гибкий навык 1]", "scoreClass": "color-success", "weight": 80, "justification": "[Косвенное подтверждение через описание командных ролей и достижений.]" },
-        { "name": "[Гибкий навык 2]", "scoreClass": "color-average", "weight": 20, "justification": "[Навык важен для роли, но не может быть оценен по резюме. Требует проверки на интервью.]" }
+        { "name": "[Гибкий навык 1]", "scoreClass": "color-badge-bg-success", "weight": 80, "justification": "[Косвенное подтверждение через описание командных ролей и достижений.]" },
+        { "name": "[Гибкий навык 2]", "scoreClass": "color-badge-bg-average", "weight": 20, "justification": "[Навык важен для роли, но не может быть оценен по резюме. Требует проверки на интервью.]" }
       ],
       "formal": [
-        { "name": "[Формальный критерий]", "scoreClass": "color-success", "weight": 100, "justification": "[Соответствие подтверждено информацией в резюме (например, уровень языка, сертификат).]" }
+        { "name": "[Формальный критерий]", "scoreClass": "color-badge-bg-success", "weight": 100, "justification": "[Соответствие подтверждено информацией в резюме (например, уровень языка, сертификат).]" }
       ]
     }
   },
@@ -832,9 +856,9 @@ img, svg, video, canvas { max-width: 100% !important; height: auto !important; }
 const HiringCoPilotApp = {
     // ==== 1. CONFIG & CONSTANTS ====
     config: {
-        SCORE_MAP: { "color-success": 1.0, "color-average": 0.6, "color-weak": 0.1 },
-        THEME_STORAGE_KEY: 'hrcvTheme',
-        NOTES_STORAGE_KEY: 'hrcvNotes',
+        SCORE_MAP: { "color-badge-bg-success": 1.0, "color-badge-bg-average": 0.6, "color-badge-bg-weak": 0.1 },
+        THEME_STORAGE_KEY: 'arhaTheme',
+        NOTES_STORAGE_KEY: 'arhaNotes',
         DEFAULT_THEME: 'dark',
         FIXED_VERIFICATION_IMPACT: 5.0, // Fixed impact for Test Assignment verification
     },
@@ -883,9 +907,9 @@ const HiringCoPilotApp = {
     // ==== 4. CORE LOGIC (CALCULATIONS) ====
     logic: {
         getScoreVerdict(score) {
-            if (score < 60) return { verdict: 'Weak', class: 'color-weak', colorVar: 'var(--color-weak)' };
-            if (score < 80) return { verdict: 'Average', class: 'color-average', colorVar: 'var(--color-average)' };
-            return { verdict: 'Strong', class: 'color-executive', colorVar: 'var(--color-executive)' };
+            if (score < 60) return { verdict: 'Weak', class: 'color-badge-bg-weak', colorVar: 'var(--color-badge-bg-weak)' };
+            if (score < 80) return { verdict: 'Average', class: 'color-badge-bg-average', colorVar: 'var(--color-badge-bg-average)' };
+            return { verdict: 'Strong', class: 'color-badge-bg-strong', colorVar: 'var(--color-badge-bg-strong)' };
         },
         calculateScores(profile) {
             const { SCORE_MAP, FIXED_VERIFICATION_IMPACT } = HiringCoPilotApp.config;
@@ -900,8 +924,8 @@ const HiringCoPilotApp = {
                 items.forEach(item => {
                     const currentScore = SCORE_MAP[item.scoreClass];
                     sectionScore += currentScore * (item.weight / 100);
-                    if (item.scoreClass !== 'color-success') {
-                        const scoreChangeDecimal = SCORE_MAP['color-success'] - currentScore;
+                    if (item.scoreClass !== 'color-badge-bg-success') {
+                        const scoreChangeDecimal = SCORE_MAP['color-badge-bg-success'] - currentScore;
                         const impact = scoreChangeDecimal * (item.weight / 100) * (sectionWeight / 100) * 100;
                         dynamicPoints.push({ name: item.name, impact });
                     }
@@ -944,7 +968,7 @@ const HiringCoPilotApp = {
                     const li = document.createElement('li');
                     li.className = `content-block ${item.scoreClass}`;
                     li.setAttribute('data-element', 'competency-item');
-                    li.innerHTML = `<div class="competency-header"><span class="competency-name">${item.name}</span></div><div class="progress-display"><div class="progress-bar-wrapper"><div class="progress-bar"></div></div><span class="item-weight">${item.weight}%</span></div><p class="competency-justification" style="font-size: 0.9em; color: var(--color-text-secondary);">${item.justification}</p>`;
+                    li.innerHTML = `<div class="competency-header"><span class="competency-name">${item.name}</span></div><div class="progress-display"><div class="progress-bar-wrapper"><div class="progress-bar"></div></div><span class="item-weight">${item.weight}%</span></div><p class="competency-justification" style="font-size: 0.9em; color: var(--color-text-muted);">${item.justification}</p>`;
                     fragment.appendChild(li);
                 });
                 listEl.appendChild(fragment);
@@ -961,18 +985,18 @@ const HiringCoPilotApp = {
             
             if (dom.gradeValueDisplay && profile.grade) {
                 const gradeText = profile.grade.toLowerCase();
-                let gradeClass = 'color-average';
-                if (gradeText.includes('head') || gradeText.includes('c-level')) gradeClass = 'color-executive';
-                else if (gradeText.includes('senior') || gradeText.includes('lead')) gradeClass = 'color-success';
-                else if (gradeText.includes('junior')) gradeClass = 'color-weak';
+                let gradeClass = 'color-badge-bg-average';
+                if (gradeText.includes('head') || gradeText.includes('c-level')) gradeClass = 'color-badge-bg-strong';
+                else if (gradeText.includes('senior') || gradeText.includes('lead')) gradeClass = 'color-badge-bg-success';
+                else if (gradeText.includes('junior')) gradeClass = 'color-badge-bg-weak';
                 dom.gradeValueDisplay.textContent = profile.grade;
                 dom.gradeValueDisplay.className = 'score-value ' + gradeClass;
             }
             if (dom.confidenceValueDisplay && profile.confidence) {
                 const confidenceText = profile.confidence.toLowerCase();
-                let confidenceClass = 'color-average';
-                if (confidenceText === 'high') confidenceClass = 'color-success';
-                if (confidenceText === 'low') confidenceClass = 'color-weak';
+                let confidenceClass = 'color-badge-bg-average';
+                if (confidenceText === 'high') confidenceClass = 'color-badge-bg-success';
+                if (confidenceText === 'low') confidenceClass = 'color-badge-bg-weak';
                 dom.confidenceValueDisplay.textContent = profile.confidence;
                 dom.confidenceValueDisplay.className = 'score-value ' + confidenceClass;
             }
