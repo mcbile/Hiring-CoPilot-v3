@@ -473,13 +473,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
 /* ==== PART 2.5: SIDEBAR COMPONENTS ==== */
 .sidebar-block { padding: 15px; }
 [data-element="candidate-header"] { text-align: left; }
-[data-element="candidate-name"] { font-size: 1.3em; margin-bottom: 8px; color: var(--color-accent); }
-.candidate-meta-group { display: flex; align-items: center; gap: 15px; color: var(--color-text-muted); font-size: 1em; }
+[data-element="candidate-name"] { font-size: 1.2em; margin-bottom: 8px; color: var(--color-accent); }
+.candidate-meta-group { display: flex; align-items: center; gap: 15px; color: var(--color-text-main); }
 [data-section="position"] { text-align: center; }
 [data-element="position-title"] { display: inline-block; background-color: var(--color-bg); padding: 4px 10px; border-radius: 6px; font-weight: 500; color: var(--color-text-main); font-size: 1.3em; }
 .score-display { display: flex; justify-content: space-between; align-items: center; padding: 15px 0 0 0; margin-top:15px; border-top: 1px solid var(--color-border); }
 [data-section="assessment-summary"] .score-display:first-child { padding-top: 0; margin-top:0; border-top: none; }
-[data-section="assessment-summary"] h4 { padding-top: 15px; margin-top:15px; border-top: 1px solid var(--color-border); }
+[data-section="assessment-summary"] h4 { padding-top: 15px; margin-top:15px; border-top: 1px solid var(--color-border); color: var(--color-accent-a); }
 .score-label, [data-section="assessment-summary"] h4 { font-size: 1.1em; font-weight: 500; line-height: 1.3; }
 .score-value { font-size: 1.1em; font-weight: bold; padding: 4px 10px; border-radius: 6px; color: var(--color-badge-text); min-width: 120px; text-align: center; }
 .score-value.color-badge-bg-weak { background-color: var(--color-badge-bg-weak); }
@@ -533,7 +533,7 @@ pre#test-assignment-md, pre#evaluation-form-md { color: var(--color-text-muted);
 #scrollToTopBtn.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
 footer { text-align: center; margin-top: 1rem; padding: 1rem 0; color: var(--color-text-muted); font-size: 0.9em; }
 footer p { margin: 0.25rem 0; }
-footer .copyright { color: var(--color-title); font-weight: bold; }
+footer .copyright { color: var(--color-accent-a); font-weight: bold; }
 /* ==== END PART 2.7 ==== */
 
 /* ==== PART 2.8: RESPONSIVE & PRINT STYLES ==== */
@@ -544,19 +544,19 @@ footer .copyright { color: var(--color-title); font-weight: bold; }
 @media print {
 :root {
 --color-bg: #FFFFFF;
---color-bg-surface: #e5f0ff;
---color-title: #0057a6;
---color-accent: #244075;
---color-accent-a: #d4deed;
---color-badge-text: #111111;
---color-text-main: #111827;
---color-text-muted: #4B5563;
---color-border: #bfbfbf;
---color-badge-bg-danger: #DC2626;
---color-badge-bg-weak: #f87171;
---color-badge-bg-average: #f59e0b;
---color-badge-bg-success: #38761d;
---color-badge-bg-strong: #2aae48;
+--color-bg-surface: #E7E7E9;
+--color-title: #000000;
+--color-text-main: #1C1C1E;
+--color-text-muted: #6E6E73;
+--color-accent: #007AFF;
+--color-accent-a: rgba(0,122,255,0.15);
+--color-badge-text: #111;
+--color-badge-bg-danger: #FF3B30;
+--color-badge-bg-weak: #FF9F94;
+--color-badge-bg-average: #FFCC00;
+--color-badge-bg-success: #34C759;
+--color-badge-bg-strong: #30D158;
+--color-border: #D1D1D6;
 --border-width: 1px;
 }
 
